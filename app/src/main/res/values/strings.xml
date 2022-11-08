@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Jogo Da Velha</string>
+    <string name="menu_novo_jogo">Novo jogo</string>
+</resources>
