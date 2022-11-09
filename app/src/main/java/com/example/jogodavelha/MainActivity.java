@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
         final EditText editText2 = new EditText(this);
         AlertDialog.Builder segundojogador = new AlertDialog.Builder(this);
         segundojogador.setMessage("Digite o nome do jogador 2: ");
-        segundojogador.setTitle("JOGADOR 2: ");
+        segundojogador.setTitle("JOGADOR: ");
         segundojogador.setView(editText2);
         segundojogador.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
         final EditText editText = new EditText(this);
         AlertDialog.Builder primeirojogador = new AlertDialog.Builder(this);
         primeirojogador.setMessage("Digite o nome do jogador 1: ");
-        primeirojogador.setTitle("JOGADOR 1: ");
+        primeirojogador.setTitle("JOGADOR: ");
         primeirojogador.setView(editText);
         primeirojogador.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
@@ -82,17 +82,17 @@ public class MainActivity extends AppCompatActivity {
         button.setEnabled(true);
 
         if (jogadorAtual == 1) {
-            posicao[x][y] = 1;
-            button.setText("X");
-            jogadorAtual = 2;
-            ganhador = jogador1;
-            checarJogada(1);
-        } else {
             posicao[x][y] = 2;
-            button.setText("O");
+            button.setText("X");
             jogadorAtual = 1;
-            ganhador = jogador2;
+            ganhador = jogador1;
             checarJogada(2);
+        } else {
+            posicao[x][y] = 1;
+            button.setText("O");
+            jogadorAtual = 2;
+            ganhador = jogador2;
+            checarJogada(1);
         }
     }
 
