@@ -14,7 +14,6 @@ import android.widget.EditText;
 
 public class MainActivity extends AppCompatActivity {
 
-    private int quantidade;
     private int jogadorAtual;
     private final int[][] posicao = new int[3][3];
     private final Button[] btn = new Button[9];
@@ -27,8 +26,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        int quantidade = 1;
-        int jogadorAtual = 1;
         btn[0] = findViewById(R.id.btn_1);
         btn[1] = findViewById(R.id.btn_2);
         btn[2] = findViewById(R.id.btn_3);
@@ -38,6 +35,55 @@ public class MainActivity extends AppCompatActivity {
         btn[6] = findViewById(R.id.btn_7);
         btn[7] = findViewById(R.id.btn_8);
         btn[8] = findViewById(R.id.btn_9);
+
+        btn[0].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                jogada(btn[0], 0, 0);
+            }
+        });
+
+        btn[1].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                jogada(btn[1], 0, 1);
+            }
+        });
+
+        btn[2].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                jogada(btn[2], 0, 2);
+            }
+        });
+
+        btn[3].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                jogada(btn[3], 1, 0);
+            }
+        });
+
+        btn[4].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                jogada(btn[4], 1, 1);
+            }
+        });
+
+        btn[5].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                jogada(btn[5], 1, 2);
+            }
+        });
+
+        btn[6].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                jogada(btn[6], 2, 0);
+            }
+        });
 
         btn[7].setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,7 +157,6 @@ public class MainActivity extends AppCompatActivity {
             ganhador = jogador2;
             checarJogada(2);
         }
-        quantidade ++;
     }
 
     public boolean vitoria(int x) {
