@@ -26,78 +26,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        btn[0] = findViewById(R.id.btn_1);
-        btn[1] = findViewById(R.id.btn_2);
-        btn[2] = findViewById(R.id.btn_3);
-        btn[3] = findViewById(R.id.btn_4);
-        btn[4] = findViewById(R.id.btn_5);
-        btn[5] = findViewById(R.id.btn_6);
-        btn[6] = findViewById(R.id.btn_7);
-        btn[7] = findViewById(R.id.btn_8);
-        btn[8] = findViewById(R.id.btn_9);
-
-        btn[0].setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                jogada(btn[0], 0, 0);
-            }
-        });
-
-        btn[1].setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                jogada(btn[1], 0, 1);
-            }
-        });
-
-        btn[2].setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                jogada(btn[2], 0, 2);
-            }
-        });
-
-        btn[3].setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                jogada(btn[3], 1, 0);
-            }
-        });
-
-        btn[4].setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                jogada(btn[4], 1, 1);
-            }
-        });
-
-        btn[5].setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                jogada(btn[5], 1, 2);
-            }
-        });
-
-        btn[6].setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                jogada(btn[6], 2, 0);
-            }
-        });
-
-        btn[7].setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                jogada(btn[7], 2, 1);
-            }
-        });
-
-        btn[8].setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                jogada(btn[8], 2, 3);
-            }
-        });
+        setupBotoes();
+        setupCliks();
     }
 
     @Override
@@ -110,35 +40,27 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.item_menu_novo_jogo) {
            limpar();
-           final EditText editText2 = new EditText(this);
-           AlertDialog.Builder segundojogador = new AlertDialog.Builder(this);
-           segundojogador.setMessage("Digite o nome do jogador 2: ");
-           segundojogador.setTitle("JOGADOR 2: ");
-           segundojogador.setView(editText2);
-           segundojogador.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-               @Override
-               public void onClick(DialogInterface dialogInterface, int i) {
-                   jogador2 = editText2.getText().toString();
-               }
-           });
-           segundojogador.create();
+            AlertDialog.Builder segundojogador = dialogNomeJogador(
+                    "Digite o nome do jogador 1: ", "JOGADOR 1: ", jogador1);
+            segundojogador.create();
            segundojogador.show();
-
-            final EditText editText = new EditText(this);
-            AlertDialog.Builder primeirojogador = new AlertDialog.Builder(this);
-            primeirojogador.setMessage("Digite o nome do jogador 1: ");
-            primeirojogador.setTitle("JOGADOR 1: ");
-            primeirojogador.setView(editText);
-            primeirojogador.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    jogador1 = editText.getText().toString();
-                }
-            });
+            AlertDialog.Builder primeirojogador = dialogNomeJogador(
+                    "Digite o nome do jogador 2: ", "JOGADOR 2: ", jogador2);
             primeirojogador.create();
             primeirojogador.show();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @NonNull
+    private AlertDialog.Builder dialogNomeJogador(String message, String title, String jogador2) {
+        final EditText editText2 = new EditText(this);
+        AlertDialog.Builder segundojogador = new AlertDialog.Builder(this);
+        segundojogador.setMessage(message);
+        segundojogador.setTitle(title);
+        segundojogador.setView(editText2);
+        segundojogador.setPositiveButton("OK", (dialogInterface, i) -> editText2.getText());
+        return segundojogador;
     }
 
     public void jogada(Button button, int x, int y) {
@@ -160,7 +82,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public boolean vitoria(int x) {
-        // verifica posições marcadas na horizontal e vertical
+        if (verificaPosicoesHorizontalVertical(x))
+            return true;
+        return verificaPosicoesDiagonais(x);
+    }
+
+    private boolean verificaPosicoesDiagonais(int x) {
+        if(posicao[0][0] == x && posicao[1][1] == x && posicao[2][2] == 0){
+            return true;
+        }
+        return posicao[0][2] == x && posicao[1][1] == x && posicao[2][0] == x;
+    }
+
+    private boolean verificaPosicoesHorizontalVertical(int x) {
         for (int i = 0; i < posicao.length; i++) {
             if (posicao[i][0] == x && posicao[i][1] == x && posicao[i][2] == x){
                 return true;
@@ -168,13 +102,6 @@ public class MainActivity extends AppCompatActivity {
             if (posicao[0][i] == x && posicao[1][i] == x && posicao[2][i] == x) {
                 return true;
             }
-        }
-        // verifica posições marcadas nas diagonais
-        if(posicao[0][0] == x && posicao[1][1] == x && posicao[2][2] == 0){
-            return true;
-        }
-        if (posicao[0][2] == x && posicao[1][1] == x && posicao[2][0] == x) {
-            return true;
         }
         return false;
     }
@@ -212,5 +139,29 @@ public class MainActivity extends AppCompatActivity {
         jogador1 = " ";
         jogador2 = " ";
         ganhador = " ";
+    }
+
+    private void setupCliks() {
+        btn[0].setOnClickListener(view -> jogada(btn[0], 0, 0));
+        btn[1].setOnClickListener(view -> jogada(btn[1], 0, 1));
+        btn[2].setOnClickListener(view -> jogada(btn[2], 0, 2));
+        btn[3].setOnClickListener(view -> jogada(btn[3], 1, 0));
+        btn[4].setOnClickListener(view -> jogada(btn[4], 1, 1));
+        btn[5].setOnClickListener(view -> jogada(btn[5], 1, 2));
+        btn[6].setOnClickListener(view -> jogada(btn[6], 2, 0));
+        btn[7].setOnClickListener(view -> jogada(btn[7], 2, 1));
+        btn[8].setOnClickListener(view -> jogada(btn[8], 2, 3));
+    }
+
+    private void setupBotoes() {
+        btn[0] = findViewById(R.id.btn_1);
+        btn[1] = findViewById(R.id.btn_2);
+        btn[2] = findViewById(R.id.btn_3);
+        btn[3] = findViewById(R.id.btn_4);
+        btn[4] = findViewById(R.id.btn_5);
+        btn[5] = findViewById(R.id.btn_6);
+        btn[6] = findViewById(R.id.btn_7);
+        btn[7] = findViewById(R.id.btn_8);
+        btn[8] = findViewById(R.id.btn_9);
     }
 }
