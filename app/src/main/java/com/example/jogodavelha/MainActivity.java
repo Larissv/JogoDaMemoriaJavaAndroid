@@ -82,17 +82,17 @@ public class MainActivity extends AppCompatActivity {
         button.setEnabled(true);
 
         if (jogadorAtual == 1) {
-            posicao[x][y] = 2;
-            button.setText("X");
-            jogadorAtual = 1;
-            ganhador = jogador1;
-            checarJogada(2);
-        } else {
             posicao[x][y] = 1;
-            button.setText("O");
+            button.setText("X");
             jogadorAtual = 2;
             ganhador = jogador2;
             checarJogada(1);
+        } else {
+            posicao[x][y] = 2;
+            button.setText("O");
+            jogadorAtual = 1;
+            ganhador = jogador1;
+            checarJogada(2);
         }
     }
 
