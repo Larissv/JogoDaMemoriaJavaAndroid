@@ -39,28 +39,43 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.item_menu_novo_jogo) {
-           limpar();
-            AlertDialog.Builder segundojogador = dialogNomeJogador(
-                    "Digite o nome do jogador 1: ", "JOGADOR 1: ", jogador1);
-            segundojogador.create();
-           segundojogador.show();
-            AlertDialog.Builder primeirojogador = dialogNomeJogador(
-                    "Digite o nome do jogador 2: ", "JOGADOR 2: ", jogador2);
-            primeirojogador.create();
-            primeirojogador.show();
+            limpar();
+            dialogNomeJogadorDois();
+            dialogNomeJogadorUm();
         }
         return super.onOptionsItemSelected(item);
     }
 
-    @NonNull
-    private AlertDialog.Builder dialogNomeJogador(String message, String title, String jogador2) {
+    private void dialogNomeJogadorDois() {
         final EditText editText2 = new EditText(this);
         AlertDialog.Builder segundojogador = new AlertDialog.Builder(this);
-        segundojogador.setMessage(message);
-        segundojogador.setTitle(title);
+        segundojogador.setMessage("Digite o nome do jogador 2: ");
+        segundojogador.setTitle("JOGADOR 2: ");
         segundojogador.setView(editText2);
-        segundojogador.setPositiveButton("OK", (dialogInterface, i) -> editText2.getText());
-        return segundojogador;
+        segundojogador.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                jogador2 = editText2.getText().toString();
+            }
+        });
+        segundojogador.create();
+        segundojogador.show();
+    }
+
+    private void dialogNomeJogadorUm() {
+        final EditText editText = new EditText(this);
+        AlertDialog.Builder primeirojogador = new AlertDialog.Builder(this);
+        primeirojogador.setMessage("Digite o nome do jogador 1: ");
+        primeirojogador.setTitle("JOGADOR 1: ");
+        primeirojogador.setView(editText);
+        primeirojogador.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                jogador1 = editText.getText().toString();
+            }
+        });
+        primeirojogador.create();
+        primeirojogador.show();
     }
 
     public void jogada(Button button, int x, int y) {
@@ -88,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private boolean verificaPosicoesDiagonais(int x) {
-        if(posicao[0][0] == x && posicao[1][1] == x && posicao[2][2] == 0){
+        if (posicao[0][0] == x && posicao[1][1] == x && posicao[2][2] == 0) {
             return true;
         }
         return posicao[0][2] == x && posicao[1][1] == x && posicao[2][0] == x;
@@ -96,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
 
     private boolean verificaPosicoesHorizontalVertical(int x) {
         for (int i = 0; i < posicao.length; i++) {
-            if (posicao[i][0] == x && posicao[i][1] == x && posicao[i][2] == x){
+            if (posicao[i][0] == x && posicao[i][1] == x && posicao[i][2] == x) {
                 return true;
             }
             if (posicao[0][i] == x && posicao[1][i] == x && posicao[2][i] == x) {
