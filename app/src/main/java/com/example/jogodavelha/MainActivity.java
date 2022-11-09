@@ -8,11 +8,9 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
-
-import java.util.IllegalFormatCodePointException;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -41,6 +39,19 @@ public class MainActivity extends AppCompatActivity {
         btn[7] = findViewById(R.id.btn_8);
         btn[8] = findViewById(R.id.btn_9);
 
+        btn[7].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                jogada(btn[7], 2, 1);
+            }
+        });
+
+        btn[8].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                jogada(btn[8], 2, 3);
+            }
+        });
     }
 
     @Override
@@ -131,6 +142,7 @@ public class MainActivity extends AppCompatActivity {
             alertaVenceu.setPositiveButton("OK", null);
             alertaVenceu.create();
             alertaVenceu.show();
+            fimDeJogo();
         }
     }
 
@@ -142,7 +154,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void limpar() {
         for (int i = 0; i < 9; i++) {
-            btn[i].setEnabled(false);
+            btn[i].setEnabled(true);
             btn[i].setText("");
         }
 
